@@ -1,6 +1,14 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #fff;
+    background: #1d1d1d;
+}
+
+
 /* The sidebar menu */
 
 .sidenav {
+    font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -14,11 +22,28 @@
     top: 0;
     /* Stay at the top */
     left: 0;
-    background-color: #111;
+    background-color: #181818;
     /* Black */
     overflow-x: hidden;
     /* Disable horizontal scroll */
-    padding-top: 20px;
+    /* padding-top: 20px; */
+}
+
+
+/* Logo */
+
+.sidenav div {
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 8em;
+}
+
+.sidenav div img {
+    padding-top: 1.5em;
+    max-width: 75px;
+    max-height: 75px;
 }
 
 
@@ -63,8 +88,11 @@
     margin-block-start: 0em;
 }
 
-.about>p {
-    padding-left: 5em;
+.about>h2 {
+    padding-left: 3.5em;
+    margin-block-start: 0em;
+    font-family: 'Caveat', cursive;
+    color: #8d8d8d;
 }
 
 .portfolio {
