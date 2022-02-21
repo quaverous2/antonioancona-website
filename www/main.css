@@ -92,6 +92,11 @@ body {
 
 /* Style page content */
 
+.body {
+    display: flex;
+    flex-direction: column;
+}
+
 .main {
     margin-left: 160px;
     /* Same as the width of the sidenav */
@@ -239,7 +244,7 @@ body {
 }
 
 .skills {
-    height: 80vh;
+    height: 100vh;
 }
 
 .skills>h1 {
@@ -313,7 +318,9 @@ body {
     align-items: center;
 }
 
-.contactinfo>div>p {
+.contact-text {
+    display: flex;
+    flex-direction: column;
     font-size: 0.9em;
     font-family: 'Open Sans', sans-serif;
 }
