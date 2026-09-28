@@ -44,9 +44,6 @@ void main() {
   float light = smoothstep(0.18, 0.82, field + wave);
   vec3 color = mix(vec3(0.01, 0.055, 0.04), vec3(0.12, 0.48, 0.34), pow(light, 1.25));
 
-  // Keep the animated field above a curved boundary that rises from the lower-left.
-  float curve = 0.58 * pow(vUv.x, 0.68);
-  float animationMask = smoothstep(curve - 0.045, curve + 0.045, vUv.y);
   float grain = (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.07;
-  gl_FragColor = vec4(color + grain, 0.68 * animationMask);
+  gl_FragColor = vec4(color + grain, 0.68);
 }
