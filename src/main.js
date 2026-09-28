@@ -1,9 +1,16 @@
 import './style.css';
+import './animations/text.css';
+import { TextAnimationController } from './animations/TextAnimationController.js';
 
-const routes = new Set(['home', 'projects', 'about', 'contact']);
+const routes = new Set(['home', 'experience', 'contact']);
 const routeSections = [...document.querySelectorAll('[data-route]')];
 const navigationLinks = [...document.querySelectorAll('[data-nav-link]')];
 const defaultRoute = 'home';
+const textAnimations = new TextAnimationController({
+  sections: routeSections,
+  navigationLinks,
+  prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)'),
+});
 
 function routeFromLocation() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -11,24 +18,23 @@ function routeFromLocation() {
   return routes.has(route) ? route : defaultRoute;
 }
 
-function renderRoute() {
-  const activeRoute = routeFromLocation();
-
-  routeSections.forEach((section) => {
-    section.hidden = section.id !== activeRoute;
-  });
-
-  navigationLinks.forEach((link) => {
-    const linkRoute = link.pathname.replace(/\/+$/, '').slice(1) || defaultRoute;
-    const isCurrent = linkRoute === activeRoute;
-    if (isCurrent) {
-      link.setAttribute('aria-current', 'page');
-    } else {
-      link.removeAttribute('aria-current');
-    }
-  });
-
+function updateDocumentTitle(activeRoute) {
   document.title = `${activeRoute[0].toUpperCase()}${activeRoute.slice(1)} — Antonio Ancona`;
+}
+
+function renderInitialRoute() {
+  const activeRoute = routeFromLocation();
+  textAnimations.initialize(activeRoute);
+  updateDocumentTitle(activeRoute);
+}
+
+async function renderRoute() {
+  const activeRoute = routeFromLocation();
+  const didTransition = await textAnimations.transitionTo(activeRoute);
+
+  if (didTransition) {
+    updateDocumentTitle(activeRoute);
+  }
 }
 
 document.querySelector('#current-year').textContent = new Date().getFullYear();
@@ -39,13 +45,22 @@ navigationLinks.forEach((link) => {
     }
 
     event.preventDefault();
+    if (textAnimations.isTransitioning) {
+      return;
+    }
+
+    const nextRoute = link.pathname.replace(/\/+$/, '').slice(1) || defaultRoute;
+    if (nextRoute === textAnimations.activeRoute) {
+      return;
+    }
+
     window.history.pushState({}, '', link.href);
     renderRoute();
   });
 });
 
 window.addEventListener('popstate', renderRoute);
-renderRoute();
+renderInitialRoute();
 
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   import('./background/BackgroundController.js')

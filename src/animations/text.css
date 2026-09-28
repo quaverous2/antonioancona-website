@@ -1,0 +1,85 @@
+/* Text and UI animation system. Background motion lives in src/background/. */
+:root {
+  --text-motion-duration: 200ms;
+  --text-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --nav-current-scale: 1.04;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  color: #aeb8bf;
+  font-weight: 500;
+  text-decoration: none;
+  transform-origin: left center;
+  transition:
+    color var(--text-motion-duration) var(--text-motion-easing),
+    opacity var(--text-motion-duration) var(--text-motion-easing),
+    transform var(--text-motion-duration) var(--text-motion-easing),
+    font-weight var(--text-motion-duration) var(--text-motion-easing);
+}
+
+.site-nav a::before {
+  width: 1.25em;
+  content: '—';
+  opacity: 0;
+  transition: opacity var(--text-motion-duration) var(--text-motion-easing);
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: #ffffff;
+}
+
+.site-nav a[aria-current] {
+  color: #ffffff;
+  font-weight: 700;
+  transform: scale(var(--nav-current-scale));
+}
+
+.site-nav a[aria-current]::before {
+  opacity: 1;
+}
+
+.is-route-transitioning .site-nav {
+  pointer-events: none;
+}
+
+.site-content [data-route].is-route-entering {
+  animation: text-route-enter var(--text-motion-duration) var(--text-motion-easing) both;
+}
+
+.site-content [data-route].is-route-leaving {
+  animation: text-route-leave var(--text-motion-duration) var(--text-motion-easing) both;
+}
+
+@keyframes text-route-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes text-route-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav a,
+  .site-nav a::before {
+    transition: none;
+  }
+}
