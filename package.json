@@ -1,0 +1,29 @@
+{
+  "name": "antonioancona-website",
+  "version": "1.0.0",
+  "description": "An original personal portfolio designed to communicate Antonio Ancona’s professional profile, selected work, technical range, and contact details. Its information architecture and interaction model take inspiration from [Keita Yamada’s portfolio](https://p5aholic.me/): a restrained, editorial single-page experience with a persistent identity/navigation area and a chronological work index. The visual design, content, and implementation must remain original.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quaverous2/antonioancona-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quaverous2/antonioancona-website/issues"
+  },
+  "homepage": "https://github.com/quaverous2/antonioancona-website#readme",
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "tweakpane": "^4.0.5",
+    "vite": "^8.3.1"
+  }
+}
