@@ -20,3 +20,5 @@ pnpm-debug.log*
 .vite/
 .DS_Store
 Thumbs.db
+
+/resume.txt

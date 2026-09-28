@@ -152,14 +152,6 @@ body {
   text-align: right;
 }
 
-.eyebrow {
-  margin: 0 0 0.75rem;
-  color: #a5a5a0;
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 h1 {
   margin: 0;
   font-size: clamp(2.25rem, 9vw, 8rem);
