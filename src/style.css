@@ -1,8 +1,11 @@
 :root {
   color-scheme: dark;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #121212;
-  color: #f4f4f0;
+  background: #0b0e13;
+  color: #edf2f5;
+  --content-inset-x: clamp(1.25rem, 5vw, 6rem);
+  --content-inset-y: clamp(1.25rem, 6vh, 5rem);
+  --frame-inset: clamp(1.25rem, 2vw, 2rem);
 }
 
 * {
@@ -11,15 +14,143 @@
 
 body {
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
+  overflow: hidden;
+  background: inherit;
 }
 
-.welcome {
+#background-canvas {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.background-mask {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 30%, rgb(110 148 123 / 12%), transparent 38rem),
+    linear-gradient(135deg, rgb(10 13 18 / 22%), rgb(10 13 18 / 54%));
+}
+
+.page-frame {
+  position: fixed;
+  z-index: 2;
+  inset: var(--frame-inset);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #69737d;
+  background: #11151c;
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 20%);
+}
+
+.page-frame::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(circle at 70% 25%, #264d3d 0%, transparent 42rem),
+    linear-gradient(135deg, #101b16 0%, #111914 52%, #0b100d 100%);
+}
+
+.site-shell {
+  position: relative;
+  z-index: 2;
   display: grid;
-  min-height: 100vh;
-  place-content: center;
+  grid-template-columns: clamp(7rem, 30vw, 24rem) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.site-rail {
+  display: flex;
+  position: sticky;
+  top: 0;
+  flex-direction: column;
+  height: 100%;
   padding: 2rem;
+  /* overflow-y: auto; */
+}
+
+.wordmark {
+  color: inherit;
+  font-size: 1.875rem;
+  font-weight: 650;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.role {
+  color: #aeb8bf;
+  font-size: 1.09375rem;
+}
+
+.role {
+  margin: 0.5rem 0 0;
+}
+
+.site-nav {
+  display: grid;
+  gap: 0.75rem;
+  margin: 4rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  color: #aeb8bf;
+  text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible,
+.site-nav a[aria-current] {
+  color: #ffffff;
+}
+
+.site-nav a[aria-current]::before {
+  content: '— ';
+}
+
+.site-copyright {
+  position: fixed;
+  z-index: 3;
+  right: var(--frame-inset);
+  bottom: calc(var(--frame-inset) - 1rem);
+  margin: 0;
+  color: #aeb8bf;
+  font-size: 0.75rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.site-content {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  padding: var(--content-inset-y) var(--content-inset-x);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.site-content section {
+  width: min(100%, 50rem);
+  max-width: 50rem;
+  text-align: right;
 }
 
 .eyebrow {
@@ -32,15 +163,97 @@ body {
 
 h1 {
   margin: 0;
-  font-size: clamp(3rem, 12vw, 8rem);
-  font-weight: 500;
-  letter-spacing: -0.07em;
+  font-size: clamp(2.25rem, 9vw, 8rem);
+  font-weight: 600;
+  letter-spacing: -0.075em;
+  line-height: 0.9;
 }
 
-.welcome > p:last-child {
+.lede,
+.project-card p:last-child {
   max-width: 30rem;
-  margin: 1.5rem 0 0;
+  margin: 1.5rem 0 0 auto;
   color: #c7c7c1;
   font-size: 1.125rem;
   line-height: 1.5;
+}
+
+.project-list {
+  margin-top: 2rem;
+}
+
+.project-card {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgb(237 242 245 / 20%);
+}
+
+.project-card h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.project-meta {
+  margin: 0 0 0.75rem;
+  color: #aeb8bf;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  :root {
+    --content-inset-x: 0.75rem;
+    --content-inset-y: 1.5rem;
+    --frame-inset: 1rem;
+  }
+
+  .site-shell {
+    grid-template-columns: clamp(8.5rem, 30vw, 12rem) minmax(0, 1fr);
+  }
+
+  .site-rail {
+    height: auto;
+    min-height: 100%;
+    padding: 0.5rem;
+  }
+
+  .role {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 0.78125rem;
+    white-space: nowrap;
+  }
+
+  .wordmark {
+    font-size: 0.9375rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .site-nav {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+
+  .site-content {
+    min-height: 0;
+  }
+
+  .site-copyright {
+    bottom: 0.125rem;
+    font-size: 0.625rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

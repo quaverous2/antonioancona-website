@@ -7,13 +7,63 @@
     <title>Antonio Ancona — Portfolio</title>
   </head>
   <body>
-    <main class="welcome" aria-labelledby="page-title">
-      <p class="eyebrow">Portfolio · in progress</p>
-      <h1 id="page-title">Hello, world.</h1>
-      <p>
-        The portfolio development environment is running successfully.
-      </p>
-    </main>
+    <div class="page-frame">
+      <canvas id="background-canvas" aria-hidden="true"></canvas>
+      <div class="background-mask" aria-hidden="true"></div>
+
+      <div class="site-shell">
+        <header class="site-rail">
+          <a class="wordmark" href="/home/" aria-label="Antonio Ancona, home">
+            Antonio Ancona
+          </a>
+          <p class="role">Software engineer</p>
+
+          <nav aria-label="Primary navigation">
+            <ol class="site-nav">
+              <li><a href="/about/" data-nav-link>About</a></li>
+              <li><a href="/projects/" data-nav-link>Projects</a></li>
+              <li><a href="/contact/" data-nav-link>Contact</a></li>
+            </ol>
+          </nav>
+        </header>
+
+        <main class="site-content" id="main-content">
+          <section id="home" data-route aria-labelledby="home-title">
+            <p class="eyebrow">Portfolio · in progress</p>
+            <h1 id="home-title">Hello, world.</h1>
+            <p class="lede">
+              I build reliable software and thoughtful web experiences.
+            </p>
+          </section>
+
+          <section id="projects" data-route aria-labelledby="projects-title">
+            <p class="eyebrow">Selected work</p>
+            <h1 id="projects-title">Projects</h1>
+            <div class="project-list">
+              <article class="project-card">
+                <p class="project-meta">Coming soon</p>
+                <h2>Project case studies</h2>
+                <p>Selected work, technical context, and outcomes will live here.</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="about" data-route aria-labelledby="about-title">
+            <p class="eyebrow">Profile</p>
+            <h1 id="about-title">About</h1>
+            <p class="lede">A concise introduction to my experience, approach, and technical focus.</p>
+          </section>
+
+          <section id="contact" data-route aria-labelledby="contact-title">
+            <p class="eyebrow">Get in touch</p>
+            <h1 id="contact-title">Contact</h1>
+            <p class="lede">Contact details and professional links will be added here.</p>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="site-copyright">© <span id="current-year"></span> Antonio Ancona</footer>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

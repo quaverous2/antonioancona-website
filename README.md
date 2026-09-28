@@ -23,6 +23,22 @@ This is a static site: its production output must be ordinary HTML, CSS, JavaScr
 
 The background effect is optional enhancement. When WebGL is unsupported, JavaScript fails, or the visitor requests reduced motion, the site must retain a lightweight static CSS gradient/noise background and remain fully usable.
 
+### Background animation
+
+The visual background is an original, frame-bound enhancement. It is composed in this order:
+
+```text
+solid outer viewport → page frame → CSS gradient fallback → WebGL canvas → contrast mask → site content
+```
+
+- The outer viewport gutter remains a solid color; the canvas and fallback gradient are clipped inside `.page-frame`.
+- `src/background/BackgroundController.js` creates one three.js renderer, an orthographic camera, and a full-screen plane. It is initialized once outside route rendering, so the animation persists while the visible route changes.
+- `src/background/fragment.glsl` provides an original animated noise/light-field shader. The vertex shader only supplies the full-screen plane coordinates.
+- The controller updates time and resolution uniforms, caps the pixel ratio at `1.5`, resizes to the frame’s bounds, and stops its animation loop while the browser tab is hidden.
+- three.js is dynamically imported after the core page becomes available, keeping the initial JavaScript bundle small.
+- Visitors who request reduced motion, lack WebGL support, or encounter a JavaScript error receive the CSS gradient fallback instead.
+- The separate CSS mask maintains text contrast independently of the animation.
+
 ### Dependency and deployment workflow
 
 “Static site” describes the deployed output, not the local authoring environment. Node.js and npm are used only on a development machine to install and bundle the small set of browser dependencies; they are never required by the web server.
